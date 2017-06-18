@@ -43,5 +43,29 @@ module.exports = {
                     completed: false
                 }
         ]*/
+    },
+    filterTodos(todos,showCompleted,searchText) {
+        var filteredtodos =  todos;
+        //filter by showCompleted
+        filteredtodos = filteredtodos.filter((todo) => {
+            return !todo.completed || showCompleted;
+        });
+
+        filteredtodos = filteredtodos.filter((todo) => {
+            var text = todo.text.toLowerCase();
+            return searchText.length === 0 || todoText.indexOf(searchText) > -1;
+        })
+        //filter by search text
+        //sort todos with non completed fixes
+        filteredtodos.sort((a,b) => {
+            if(!a.completed && b.completed) {
+                return -1;
+            } else if(a.completed && !b.completed) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+        return filteredtodos;
     }
 }
